@@ -16,14 +16,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Budgeting Made Easy!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xfE-uC-lGC">
-                                <rect key="frame" x="24" y="428" width="342" height="42"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Budgeting Made Easy!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xfE-uC-lGC">
+                                <rect key="frame" x="24" y="375" width="342" height="81.333333333333314"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="34"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Monthley is an application to help you plan your monthly budget." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sey-YS-5uJ">
-                                <rect key="frame" x="24" y="525.33333333333337" width="342" height="36"/>
+                                <rect key="frame" x="24" y="472.33333333333331" width="342" height="36"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -54,7 +54,7 @@
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Sey-YS-5uJ" secondAttribute="trailing" constant="24" id="5Iy-1n-obm"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="xfE-uC-lGC" secondAttribute="trailing" constant="24" id="A07-h9-CS5"/>
-                            <constraint firstItem="xfE-uC-lGC" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="384" id="NdG-9G-eCf"/>
+                            <constraint firstItem="xfE-uC-lGC" firstAttribute="top" secondItem="hWY-gH-fc4" secondAttribute="bottom" constant="164" id="D1L-T5-U5h"/>
                             <constraint firstItem="Sey-YS-5uJ" firstAttribute="top" secondItem="xfE-uC-lGC" secondAttribute="bottom" constant="16" id="S9f-SI-ZF8"/>
                             <constraint firstItem="hWY-gH-fc4" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="140" id="ZIB-G8-yir"/>
                             <constraint firstItem="5RQ-Tt-ffd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="bGx-6F-yYt"/>

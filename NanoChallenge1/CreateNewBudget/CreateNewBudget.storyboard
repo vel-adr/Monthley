@@ -38,7 +38,6 @@
                                     <color key="baseBackgroundColor" systemColor="systemGreenColor"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <action selector="buttonClicked:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="PNq-nD-tL0"/>
                                     <segue destination="daV-Zz-hnM" kind="show" identifier="toMainScreen" id="SWZ-fz-c5Q"/>
                                 </connections>
                             </button>

@@ -53,10 +53,42 @@ class AddExpenseViewController: UIViewController {
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         name = nameTextField.text ?? ""
-        amount = Int(amountTextField.text ?? "0") ?? -1
+        amount = Int(amountTextField.text ?? "") ?? -1
         selectedCategoryIndex = isCategoriesSelected.firstIndex(where: { $0 == true }) ?? -1
+        
+        if name?.isEmpty == true || amountTextField.text?.isEmpty == true {
+            let alert = UIAlertController(title: "Input Is Not Valid", message: "All text fields must be filled in order to continue", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
+                alert.dismiss(animated: true)
+            }))
+            present(alert, animated: true, completion: nil)
+            
+            return false
+        }
+        
+        if amount ?? -1 < 0 || amount ?? -1 > 999999999 {
+            let alert = UIAlertController(title: "Amount Is Not Valid", message: "The amount must be in range of 1 to 999.999.999", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
+                alert.dismiss(animated: true)
+            }))
+            present(alert, animated: true, completion: nil)
+            
+            return false
+        }
+        
+        if selectedCategoryIndex ?? -1 < 0 || selectedCategoryIndex ?? -1 > categories.count-1 {
+            let alert = UIAlertController(title: "Category Is Not Valid", message: "You should pick one of the categories in order to continue", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
+                alert.dismiss(animated: true)
+            }))
+            present(alert, animated: true, completion: nil)
+            
+            return false
+        }
+        
+        return true
     }
     
     @IBAction func saveButtonClicked(_ sender: UIButton) {

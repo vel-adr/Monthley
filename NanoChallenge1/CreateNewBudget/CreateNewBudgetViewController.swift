@@ -36,6 +36,33 @@ class CreateNewBudgetViewController: UIViewController {
         performSegue(withIdentifier: "toMainScreen", sender: self)
     }
     
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if identifier == "toMainScreen" {
+            if budgetTextField.text?.isEmpty == true {
+                let alert = UIAlertController(title: "Budget Is Not Valid", message: "The budget must be filled to continue", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
+                    alert.dismiss(animated: true)
+                }))
+                present(alert, animated: true, completion: nil)
+                
+                return false
+            } else {
+                let budget = Int(budgetTextField.text ?? "") ?? -1
+                if budget < 0 || budget > 999999999 {
+                    let alert = UIAlertController(title: "Budget Is Not Valid", message: "The budget must be in range of 0 to 999.999.999", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
+                        alert.dismiss(animated: true)
+                    }))
+                    present(alert, animated: true, completion: nil)
+                    
+                    return false
+                } else {
+                    return true
+                }
+            }
+        }
+        return false
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toMainScreen" {
@@ -48,6 +75,8 @@ class CreateNewBudgetViewController: UIViewController {
             catch {
                 print("Error creating budget")
             }
+            
+            
 //            let destinationVC = segue.destination as? MainScreenViewController
 //            let budget = budgetTextField.text
 //            destinationVC?.totalBudget = Int(CFStringGetIntValue(budget as CFString?))
