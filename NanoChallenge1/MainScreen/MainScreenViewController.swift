@@ -30,6 +30,7 @@ class MainScreenViewController: UIViewController {
         Category(name: "Saving", image: "dollarsign.circle")
     ]
     var expenses: [Expense]?
+    var budget: Budget?
     
     
     
@@ -44,6 +45,7 @@ class MainScreenViewController: UIViewController {
         tableView.register(UINib(nibName: "CustomTableHeader", bundle: nil), forHeaderFooterViewReuseIdentifier: "CustomTableHeader")
         
         fetchExpenses()
+        fetchBudget()
         updateAllData()
     }
     
@@ -57,6 +59,15 @@ class MainScreenViewController: UIViewController {
         }
         catch {
             print("Error fetching expenses")
+        }
+    }
+    
+    func fetchBudget() {
+        do {
+            budget = try context.fetch(Budget.fetchRequest())[0]
+        }
+        catch {
+            print("Error fetching budget")
         }
     }
     
@@ -77,9 +88,14 @@ class MainScreenViewController: UIViewController {
     }
     
     func updateAllData() {
-        totalBudgetLabel.text = "\(formatted(amount: totalBudget))"
+        updateTotalBudget()
         updateTotalSpending()
         updateMoneyLeftToSpend()
+    }
+    
+    func updateTotalBudget() {
+        totalBudget = Int(budget!.amount)
+        totalBudgetLabel.text = "\(formatted(amount: totalBudget))"
     }
     
     //Calculate difference between totalBudget and currentSpending
@@ -143,7 +159,7 @@ class MainScreenViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toEditBudget" {
             let destinationVC = segue.destination as? EditBudgetViewController
-            destinationVC?.budget = totalBudget
+            destinationVC?.budget = budget
         }
     }
     
@@ -201,12 +217,8 @@ class MainScreenViewController: UIViewController {
     
     //Update totalBudget value after editing
     @IBAction func unwindFromEditBudget(_ sender: UIStoryboardSegue) {
-        if sender.source is EditBudgetViewController {
-            if let sourceVC = sender.source as? EditBudgetViewController {
-                totalBudget = sourceVC.budget ?? 0
-                updateAllData()
-            }
-        }
+        fetchBudget()
+        updateAllData()
     }
 }
 

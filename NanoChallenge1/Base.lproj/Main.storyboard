@@ -42,6 +42,12 @@
                                     <segue destination="hfL-b5-Lkc" kind="presentation" id="wiM-MK-8Er"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="monthley" translatesAutoresizingMaskIntoConstraints="NO" id="hWY-gH-fc4">
+                                <rect key="frame" x="113" y="184" width="164" height="27"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="164" id="qKy-dg-CQr"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -50,17 +56,32 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="xfE-uC-lGC" secondAttribute="trailing" constant="24" id="A07-h9-CS5"/>
                             <constraint firstItem="xfE-uC-lGC" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="384" id="NdG-9G-eCf"/>
                             <constraint firstItem="Sey-YS-5uJ" firstAttribute="top" secondItem="xfE-uC-lGC" secondAttribute="bottom" constant="16" id="S9f-SI-ZF8"/>
+                            <constraint firstItem="hWY-gH-fc4" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="140" id="ZIB-G8-yir"/>
                             <constraint firstItem="5RQ-Tt-ffd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="bGx-6F-yYt"/>
+                            <constraint firstItem="hWY-gH-fc4" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="bhy-RN-gew"/>
                             <constraint firstItem="Sey-YS-5uJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="24" id="eyY-Dh-v92"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="5RQ-Tt-ffd" secondAttribute="bottom" constant="8" id="fh8-UH-O9q"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="5RQ-Tt-ffd" secondAttribute="trailing" constant="16" id="mbV-81-KLn"/>
                             <constraint firstItem="xfE-uC-lGC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="24" id="upW-BF-V1d"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <segue destination="aQC-sq-fk0" kind="show" identifier="toMainScreen" id="npV-AG-Jjj"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="20" y="80"/>
+        </scene>
+        <!--mainScreenStoryboard-->
+        <scene sceneID="0gC-Np-k8f">
+            <objects>
+                <viewControllerPlaceholder storyboardName="MainScreenStoryboard" referencedIdentifier="mainScreenStoryboard" id="aQC-sq-fk0" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="Jzr-jB-KjZ"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mVh-Xe-yg0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="615" y="-73"/>
         </scene>
         <!--CreateNewBudget-->
         <scene sceneID="Crb-Me-7bp">
@@ -72,6 +93,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="monthley" width="108" height="27"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -9,6 +9,8 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    let userDefault = UserDefaults.standard
+    
     static let formatter = NumberFormatter()
 
     override func viewDidLoad() {
@@ -18,9 +20,20 @@ class ViewController: UIViewController {
         ViewController.formatter.currencySymbol = ""
         ViewController.formatter.maximumFractionDigits = 0
         ViewController.formatter.locale = Locale.current
-        
+    
+        if !isNewUser() {
+            performSegue(withIdentifier: "toMainScreen", sender: self)
+        } else {
+            setIsNotNewUser()
+        }
     }
-
-
+    
+    func isNewUser() -> Bool {
+        return !userDefault.bool(forKey: "isNewUser")
+    }
+        
+    func setIsNotNewUser() {
+        userDefault.set(true, forKey: "isNewUser")
+    }
 }
 

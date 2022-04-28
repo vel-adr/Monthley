@@ -9,6 +9,8 @@ import UIKit
 
 class CreateNewBudgetViewController: UIViewController {
     
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
     let formatter = ViewController.formatter
     var amount = 0
     
@@ -37,9 +39,18 @@ class CreateNewBudgetViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toMainScreen" {
-            let destinationVC = segue.destination as? MainScreenViewController
-            let budget = budgetTextField.text
-            destinationVC?.totalBudget = Int(CFStringGetIntValue(budget as CFString?))
+            let budget = Budget(context: context)
+            budget.amount = Int64(budgetTextField.text ?? "0") ?? 0
+            
+            do {
+                try context.save()
+            }
+            catch {
+                print("Error creating budget")
+            }
+//            let destinationVC = segue.destination as? MainScreenViewController
+//            let budget = budgetTextField.text
+//            destinationVC?.totalBudget = Int(CFStringGetIntValue(budget as CFString?))
         }
     }
 }

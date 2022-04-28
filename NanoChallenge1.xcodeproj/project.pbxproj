@@ -418,6 +418,7 @@
 				DEVELOPMENT_TEAM = MW4P9S2TYV;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = NanoChallenge1/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Monthley;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -446,6 +447,7 @@
 				DEVELOPMENT_TEAM = MW4P9S2TYV;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = NanoChallenge1/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Monthley;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

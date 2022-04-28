@@ -9,9 +9,11 @@ import UIKit
 
 class EditBudgetViewController: UIViewController {
     
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
     @IBOutlet weak var textField: TextFieldWithPadding!
     
-    var budget: Int? = 0
+    var budget: Budget?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,11 +25,16 @@ class EditBudgetViewController: UIViewController {
             presentationController.prefersGrabberVisible = true
         }
         
-        textField.text = "\(budget ?? 0)"
+        textField.text = "\(budget?.amount ?? 0)"
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        budget = Int(textField.text ?? "0") ?? 0
+        budget?.amount = Int64(Int(textField.text ?? "0") ?? 0)
+        do {
+            try context.save()
+        } catch {
+            print("Error updating budget")
+        }
     }
     
     @IBAction func cancelButtonClicked() {
