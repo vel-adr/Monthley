@@ -6,28 +6,34 @@
 //
 
 import UIKit
+import CoreData
 
 class MainScreenViewController: UIViewController {
+    
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var totalBudgetLabel: UILabel!
+    @IBOutlet weak var backgroundRectangle: UIView!
+    @IBOutlet weak var moneyLeftToSpendLabel: UILabel!
+    @IBOutlet weak var currentSpentMoneyLabel: UILabel!
+    
     //Received or passed var
     let formatter = ViewController.formatter
     var totalBudget: Int = 0
     
-    @IBOutlet weak var backgroundRectangle: UIView!
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var totalBudgetLabel: UILabel!
-    @IBOutlet weak var currentSpentMoneyLabel: UILabel!
-    @IBOutlet weak var moneyLeftToSpendLabel: UILabel!
-    
+    //Local var
     var totalSpending: Int = 0
-    
     var expenseCategory = [
-        Category(name: "Essential", image: "house", expenses: []),
-        Category(name: "Optional", image: "gamecontroller", expenses: []),
-        Category(name: "Saving", image: "dollarsign.circle", expenses: [])
+        Category(name: "Essential", image: "house"),
+        Category(name: "Optional", image: "gamecontroller"),
+        Category(name: "Saving", image: "dollarsign.circle")
     ]
+    var expenses: [Expense]?
     
     
     
+    // --- FUNCTIONS ---
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,24 +43,51 @@ class MainScreenViewController: UIViewController {
         setBgRectangleShadow()
         tableView.register(UINib(nibName: "CustomTableHeader", bundle: nil), forHeaderFooterViewReuseIdentifier: "CustomTableHeader")
         
-        expenseCategory[0].expenses.append(Expense(name: "Kos", amount: 1000000))
-        expenseCategory[1].expenses.append(Expense(name: "Jajan", amount: 150000))
-        expenseCategory[2].expenses.append(Expense(name: "Bibit", amount: 500000))
-        
+        fetchExpenses()
         updateAllData()
+    }
+    
+    func fetchExpenses() {
+        do {
+            self.expenses = try context.fetch(Expense.fetchRequest())
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+        catch {
+            print("Error fetching expenses")
+        }
+    }
+    
+    func getExpensesWithCategory(categoryName: String) -> [Expense] {
+        let request = Expense.fetchRequest() as NSFetchRequest<Expense>
+        let pred = NSPredicate(format: "category CONTAINS '" + categoryName + "'")
+        request.predicate = pred
+        
+        var expenses = [Expense]()
+        
+        do {
+            expenses = try context.fetch(request)
+        } catch {
+            print("Error getting expenses")
+        }
+        
+        return expenses
     }
     
     func updateAllData() {
         totalBudgetLabel.text = "\(formatted(amount: totalBudget))"
         updateTotalSpending()
         updateMoneyLeftToSpend()
-        tableView.reloadData()
     }
     
+    //Calculate difference between totalBudget and currentSpending
     func updateMoneyLeftToSpend() {
         let diff = totalBudget - totalSpending
         moneyLeftToSpendLabel.text = "\(formatted(amount: diff))"
         
+        //Set text color based on difference value
         if diff >= 0 {
             moneyLeftToSpendLabel.textColor = UIColor.systemGreen
         } else {
@@ -65,14 +98,25 @@ class MainScreenViewController: UIViewController {
     func updateTotalSpending() {
         totalSpending = 0
         
-        for category in expenseCategory {
-            for expense in category.expenses {
-                totalSpending += expense.amount
-            }
+        var expenses = [Expense]()
+
+        //Fetching all expenses
+        do {
+            expenses = try context.fetch(Expense.fetchRequest())
+        }
+        catch {
+            print("Error fetching expenses")
         }
         
+        //Calculate totalSpending
+        for expense in expenses {
+            totalSpending += Int(expense.amount)
+        }
+
+        //Set text of currentSpendingLabel
         currentSpentMoneyLabel.text = "\(formatted(amount: totalSpending))"
-        
+
+        //Set color of text based on totalSpending value
         if totalSpending <= totalBudget {
             currentSpentMoneyLabel.textColor = UIColor.systemGreen
         } else {
@@ -80,10 +124,12 @@ class MainScreenViewController: UIViewController {
         }
     }
     
+    //Return formatted string of int amount
     func formatted(amount: Int) -> String {
         return formatter.string(from: NSNumber(value: amount)) ?? "-"
     }
     
+    //Set shadow for rounded rectangle
     func setBgRectangleShadow() {
         backgroundRectangle.layer.shadowColor = UIColor.black.cgColor
         backgroundRectangle.layer.shadowOpacity = 0.1
@@ -93,6 +139,7 @@ class MainScreenViewController: UIViewController {
         backgroundRectangle.layer.rasterizationScale = UIScreen.main.scale
     }
     
+    //Send current totalBudget to editBudget page
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toEditBudget" {
             let destinationVC = segue.destination as? EditBudgetViewController
@@ -100,39 +147,59 @@ class MainScreenViewController: UIViewController {
         }
     }
     
+    //Creating/Updating expenses
     @IBAction func unwindFromAddExpense(_ sender: UIStoryboardSegue) {
         if sender.source is AddExpenseViewController {
             if let sourceVC = sender.source as? AddExpenseViewController {
+                
                 //For create new expense
                 if sourceVC.expense == nil {
-                    let newExpense = Expense(name: sourceVC.name!, amount: sourceVC.amount!)
-                    self.expenseCategory[sourceVC.selectedCategoryIndex!].expenses.append(newExpense)
+                    
+                    //Create new expense object
+                    let newExpense = Expense(context: context)
+                    newExpense.name = sourceVC.name
+                    newExpense.amount = Int64(sourceVC.amount ?? 0)
+                    newExpense.category = sourceVC.categories[sourceVC.selectedCategoryIndex ?? 0]
+                    
+                    //Save it
+                    do {
+                        try context.save()
+                    }
+                    catch {
+                        print("Error saving data")
+                    }
+                    
+                    //Reload data
+                    fetchExpenses()
                 }
                 
                 //For edit
                 else {
-                    //If user change category
-                    if sourceVC.selectedCategoryIndex != sourceVC.receivedSelectedCategories {
-                        //Remove expense from old category
-                        let toBeRemovedIndex: Int = expenseCategory[sourceVC.receivedSelectedCategories!].expenses.firstIndex(where: { $0.name == sourceVC.expense?.name && $0.amount == sourceVC.expense?.amount })!
-                        expenseCategory[sourceVC.receivedSelectedCategories!].expenses.remove(at: toBeRemovedIndex)
-
-                        
-                        //Add new expense to new selected category
-                        sourceVC.expense?.name = sourceVC.name!
-                        sourceVC.expense?.amount = sourceVC.amount!
-                        expenseCategory[sourceVC.selectedCategoryIndex!].expenses.append(sourceVC.expense!)
+                    //Set expense new value
+                    sourceVC.expense?.name = sourceVC.name
+                    sourceVC.expense?.amount = Int64(sourceVC.amount!)
+                    sourceVC.expense?.category = sourceVC.categories[sourceVC.selectedCategoryIndex!]
+                    
+                    //Save it
+                    do {
+                        try context.save()
                     }
-                    else {
-                        sourceVC.expense?.name = sourceVC.name!
-                        sourceVC.expense?.amount = sourceVC.amount!
+                    catch {
+                        print("Error updating expense")
                     }
+                    
+                    //Reload data
+                    fetchExpenses()
                 }
+                
+                //Update UI
                 updateAllData()
             }
         }
     }
     
+    
+    //Update totalBudget value after editing
     @IBAction func unwindFromEditBudget(_ sender: UIStoryboardSegue) {
         if sender.source is EditBudgetViewController {
             if let sourceVC = sender.source as? EditBudgetViewController {
@@ -144,58 +211,95 @@ class MainScreenViewController: UIViewController {
 }
 
 extension MainScreenViewController: UITableViewDelegate, UITableViewDataSource {
+    //Get number of section
     func numberOfSections(in tableView: UITableView) -> Int {
         return expenseCategory.count
     }
     
+    //Get number of expenses for each section
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return expenseCategory[section].expenses.count
+        let expenses = getExpensesWithCategory(categoryName: expenseCategory[section].name)
+        return expenses.count
     }
     
+    //Setup tableView cell for each row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ExpenseTableCell", for: indexPath) as! CustomExpenseTableViewCell
         
-        cell.nameLabel.text = expenseCategory[indexPath.section].expenses[indexPath.row].name
-        let expenseAmount = expenseCategory[indexPath.section].expenses[indexPath.row].amount
-        cell.amountLabel.text = "\(formatted(amount: expenseAmount))"
+        //Get category name of that section
+        let category = expenseCategory[indexPath.section].name
+        
+        //Get expenses for that category
+        let expenses = getExpensesWithCategory(categoryName: category)
+        
+        //Set label text value
+        cell.nameLabel.text = expenses[indexPath.row].name
+        let expenseAmount = expenses[indexPath.row].amount
+        cell.amountLabel.text = "\(formatted(amount: Int(expenseAmount)))"
 
         return cell
     }
     
+    //Show modal to edit expense when user click on tableView's row
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let category = expenseCategory[indexPath.section]
-        let expense = category.expenses[indexPath.row]
         
+        //Get category name
+        let category = expenseCategory[indexPath.section].name
+        
+        //Get expenses in that category
+        let expensesInCategory = self.getExpensesWithCategory(categoryName: category)
+        
+        //Get expense at selected row
+        let expense = expensesInCategory[indexPath.row]
+
+        //Instantiate destination VC
         let vc = UIStoryboard(name: "AddExpense", bundle: nil).instantiateViewController(withIdentifier: "addExpense") as! AddExpenseViewController
         
-        let categoryIndex = vc.categories.firstIndex(where: { $0 == category.name })
+        //Get category index of that expense
+        let categoryIndex = vc.categories.firstIndex(where: { $0 == category })
+        
+        //Set destination VC variables' value
         vc.expense = expense
         vc.receivedSelectedCategories = categoryIndex
-//        vc.name = expense.name
-//        vc.amount = expense.amount
         vc.isCategoriesSelected[categoryIndex!] = true
-        
+
+        //Show destination VC (modally)
         present(vc, animated: true)
     }
-    
+
+    //Add delete action to each row in tableView
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let action = UIContextualAction(style: .destructive, title: "") { (action, view, completionHandler) in
-            let expenseNameToRemove = self.expenseCategory[indexPath.section].expenses[indexPath.row].name
-            let expenseAmountToRemove = self.expenseCategory[indexPath.section].expenses[indexPath.row].amount
+            //Get category name
+            let categoryName = self.expenseCategory[indexPath.section].name
             
-            let indexToRemove = self.expenseCategory[indexPath.section].expenses.firstIndex(where: { $0.name == expenseNameToRemove && $0.amount == expenseAmountToRemove })
+            //Get expenses in that category
+            let expensesInCategory = self.getExpensesWithCategory(categoryName: categoryName)
             
-            self.expenseCategory[indexPath.section].expenses.remove(at: indexToRemove!)
+            //Get expense at selected index
+            let expenseToRemove = expensesInCategory[indexPath.row]
             
+            //Delete that expense and save
+            self.context.delete(expenseToRemove)
+            do {
+                try self.context.save()
+            }
+            catch {
+                print("Error deleting expense")
+            }
+            
+            //Reload data
+            self.fetchExpenses()
             self.updateAllData()
         }
-        
+        //Set image for action
         action.image = UIImage(systemName: "trash")
-        
+
         return UISwipeActionsConfiguration(actions: [action])
     }
     
+    //Setup tableViewHeader for each section
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "CustomTableHeader") as! CustomTableHeader
         
@@ -205,6 +309,8 @@ extension MainScreenViewController: UITableViewDelegate, UITableViewDataSource {
         return headerView
     }
     
+    
+    //Set tableViewHeader height
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 48
     }
