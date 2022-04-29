@@ -116,7 +116,23 @@
                                     <segue destination="dZZ-BF-7KA" kind="presentation" identifier="addExpense" id="RCU-ue-9Bg"/>
                                 </connections>
                             </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="6JY-fI-zsQ">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KEA-NF-dfv">
+                                <rect key="frame" x="16" y="226" width="382" height="562"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There are no item yet." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y7G-Qb-kFL">
+                                        <rect key="frame" x="125" y="273" width="132.5" height="16"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <color key="textColor" systemColor="secondaryLabelColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="y7G-Qb-kFL" firstAttribute="centerX" secondItem="KEA-NF-dfv" secondAttribute="centerX" id="8JE-6G-Fcy"/>
+                                    <constraint firstItem="y7G-Qb-kFL" firstAttribute="centerY" secondItem="KEA-NF-dfv" secondAttribute="centerY" id="yi8-eR-Yzh"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="6JY-fI-zsQ">
                                 <rect key="frame" x="16" y="226" width="382" height="562"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="separatorInset" minX="16" minY="0.0" maxX="16" maxY="0.0"/>
@@ -162,13 +178,17 @@
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemGray6Color"/>
                         <constraints>
+                            <constraint firstItem="KEA-NF-dfv" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="Jiv-eb-RY2"/>
                             <constraint firstItem="6JY-fI-zsQ" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="KeA-Zx-X28"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="KEA-NF-dfv" secondAttribute="trailing" constant="16" id="O1T-yX-uF0"/>
                             <constraint firstItem="RX0-8D-zFV" firstAttribute="leading" secondItem="5EZ-qb-Rvc" secondAttribute="leading" id="XZh-e0-kng"/>
                             <constraint firstItem="4OQ-57-F8U" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="ZRK-m0-4OJ"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="6JY-fI-zsQ" secondAttribute="trailing" constant="16" id="Zkl-24-Tug"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="4OQ-57-F8U" secondAttribute="trailing" constant="16" id="d2i-pv-XK0"/>
+                            <constraint firstItem="KEA-NF-dfv" firstAttribute="top" secondItem="RX0-8D-zFV" secondAttribute="bottom" constant="16" id="g3m-5l-Lq3"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="4OQ-57-F8U" secondAttribute="bottom" constant="8" id="lbh-gk-DuI"/>
                             <constraint firstAttribute="trailing" secondItem="RX0-8D-zFV" secondAttribute="trailing" id="nIy-ol-2Ov"/>
+                            <constraint firstItem="4OQ-57-F8U" firstAttribute="top" secondItem="KEA-NF-dfv" secondAttribute="bottom" constant="16" id="rWb-HP-DEM"/>
                             <constraint firstItem="RX0-8D-zFV" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" id="rg9-M0-d9E"/>
                             <constraint firstItem="4OQ-57-F8U" firstAttribute="top" secondItem="6JY-fI-zsQ" secondAttribute="bottom" constant="16" id="vZp-6W-5IL"/>
                             <constraint firstItem="6JY-fI-zsQ" firstAttribute="top" secondItem="RX0-8D-zFV" secondAttribute="bottom" constant="16" id="w8k-28-Dbh"/>
@@ -177,6 +197,7 @@
                     <connections>
                         <outlet property="backgroundRectangle" destination="RX0-8D-zFV" id="Sxj-A6-pao"/>
                         <outlet property="currentSpentMoneyLabel" destination="oW7-He-y4p" id="XWT-y4-fli"/>
+                        <outlet property="emptyMessageView" destination="KEA-NF-dfv" id="cMy-wE-sSt"/>
                         <outlet property="moneyLeftToSpendLabel" destination="uZA-sg-8xh" id="7jF-64-7tL"/>
                         <outlet property="tableView" destination="6JY-fI-zsQ" id="S3b-MN-kHd"/>
                         <outlet property="totalBudgetLabel" destination="fEz-LM-SEs" id="YAm-kS-T2M"/>
@@ -215,6 +236,9 @@
     <resources>
         <image name="plus" catalog="system" width="128" height="113"/>
         <image name="square.and.pencil" catalog="system" width="128" height="115"/>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

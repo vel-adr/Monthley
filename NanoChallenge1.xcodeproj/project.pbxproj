@@ -33,6 +33,8 @@
 		E9D433C9281B23A90084D6F8 /* Expense+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D433C5281B23A90084D6F8 /* Expense+CoreDataProperties.swift */; };
 		E9D433CA281B23A90084D6F8 /* Budget+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D433C6281B23A90084D6F8 /* Budget+CoreDataClass.swift */; };
 		E9D433CB281B23A90084D6F8 /* Budget+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D433C7281B23A90084D6F8 /* Budget+CoreDataProperties.swift */; };
+		E9D433CE281B8AD40084D6F8 /* EmptyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D433CC281B8AD40084D6F8 /* EmptyTableViewCell.swift */; };
+		E9D433CF281B8AD40084D6F8 /* EmptyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9D433CD281B8AD40084D6F8 /* EmptyTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +66,8 @@
 		E9D433C5281B23A90084D6F8 /* Expense+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Expense+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E9D433C6281B23A90084D6F8 /* Budget+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Budget+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E9D433C7281B23A90084D6F8 /* Budget+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Budget+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E9D433CC281B8AD40084D6F8 /* EmptyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyTableViewCell.swift; sourceTree = "<group>"; };
+		E9D433CD281B8AD40084D6F8 /* EmptyTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +90,8 @@
 				E955ADA62819840500090F2E /* CustomRoundedRectangle.swift */,
 				E97D25DD28199ACA00E10A24 /* CustomTableHeader.xib */,
 				E94D1047281A454300F4C809 /* CustomExpenseTableViewCell.swift */,
+				E9D433CC281B8AD40084D6F8 /* EmptyTableViewCell.swift */,
+				E9D433CD281B8AD40084D6F8 /* EmptyTableViewCell.xib */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -233,6 +239,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9D433CF281B8AD40084D6F8 /* EmptyTableViewCell.xib in Resources */,
 				E955ADA32819527800090F2E /* MainScreenStoryboard.storyboard in Resources */,
 				E94ED2892819346900CFE513 /* LaunchScreen.storyboard in Resources */,
 				E94ED2862819346900CFE513 /* Assets.xcassets in Resources */,
@@ -267,6 +274,7 @@
 				E97D25DC28199AAC00E10A24 /* CustomTableHeader.swift in Sources */,
 				E9D433C9281B23A90084D6F8 /* Expense+CoreDataProperties.swift in Sources */,
 				E94D103F281A29A600F4C809 /* AddExpenseViewController.swift in Sources */,
+				E9D433CE281B8AD40084D6F8 /* EmptyTableViewCell.swift in Sources */,
 				E94ED2842819346800CFE513 /* NanoChallenge1.xcdatamodeld in Sources */,
 				E94ED29328193C8D00CFE513 /* CreateNewBudgetViewController.swift in Sources */,
 			);

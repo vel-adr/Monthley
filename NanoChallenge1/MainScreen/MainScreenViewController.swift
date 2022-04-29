@@ -14,6 +14,7 @@ class MainScreenViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var totalBudgetLabel: UILabel!
+    @IBOutlet weak var emptyMessageView: UIView!
     @IBOutlet weak var backgroundRectangle: UIView!
     @IBOutlet weak var moneyLeftToSpendLabel: UILabel!
     @IBOutlet weak var currentSpentMoneyLabel: UILabel!
@@ -31,6 +32,7 @@ class MainScreenViewController: UIViewController {
     ]
     var expenses: [Expense]?
     var budget: Budget?
+    var disabledCellIndexPath = [IndexPath]()
     
     
     
@@ -43,6 +45,7 @@ class MainScreenViewController: UIViewController {
         
         setBgRectangleShadow()
         tableView.register(UINib(nibName: "CustomTableHeader", bundle: nil), forHeaderFooterViewReuseIdentifier: "CustomTableHeader")
+        tableView.register(UINib(nibName: "EmptyTableViewCell", bundle: nil), forCellReuseIdentifier: "emptyTableViewCell")
         
         fetchExpenses()
         fetchBudget()
@@ -231,53 +234,90 @@ extension MainScreenViewController: UITableViewDelegate, UITableViewDataSource {
     //Get number of expenses for each section
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let expenses = getExpensesWithCategory(categoryName: expenseCategory[section].name)
-        return expenses.count
+        
+//        DispatchQueue.main.async {    // Recommended
+//           if expenses.count == 0 {
+//               tableView.isHidden = true
+//               self.emptyMessageView.isHidden = false
+//           }
+//           else {
+//               self.emptyMessageView.isHidden = true
+//               tableView.isHidden = false
+//           }
+//        }
+        return expenses.isEmpty ? 1 : expenses.count
     }
     
     //Setup tableView cell for each row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ExpenseTableCell", for: indexPath) as! CustomExpenseTableViewCell
+        var emptyCell: EmptyTableViewCell
+        var cell: CustomExpenseTableViewCell
+        
+        cell = tableView.dequeueReusableCell(withIdentifier: "ExpenseTableCell", for: indexPath) as! CustomExpenseTableViewCell
+        emptyCell = tableView.dequeueReusableCell(withIdentifier: "emptyTableViewCell", for: indexPath) as! EmptyTableViewCell
+
+//        fetchExpenses()
+//        tableView.reloadData()
         
         //Get category name of that section
-        let category = expenseCategory[indexPath.section].name
+        let category = self.expenseCategory[indexPath.section].name
         
         //Get expenses for that category
-        let expenses = getExpensesWithCategory(categoryName: category)
+        let expenses = self.getExpensesWithCategory(categoryName: category)
         
-        //Set label text value
-        cell.nameLabel.text = expenses[indexPath.row].name
-        let expenseAmount = expenses[indexPath.row].amount
-        cell.amountLabel.text = "\(formatted(amount: Int(expenseAmount)))"
-
+//        print(category + ": \(expenses.count) - Index path: \(indexPath) - Section: \(indexPath.section)")
+        
+        if expenses.count == 0 {
+//            emptyCell.frame.height = 30
+            disabledCellIndexPath.append(indexPath)
+            return emptyCell
+        }
+        else {
+            //Delete indexPath from disabledCellIndexPath
+            let indexToRemove = self.disabledCellIndexPath.firstIndex(where: { $0 == indexPath })
+            if indexToRemove ?? -1 >= 0 {
+                self.disabledCellIndexPath.remove(at: indexToRemove!)
+            }
+            
+            //Set label text value
+            cell.nameLabel.text = expenses[indexPath.row].name
+            let expenseAmount = expenses[indexPath.row].amount
+            cell.amountLabel.text = "\(self.formatted(amount: Int(expenseAmount)))"
+        }
+        
+//        tableView.reloadData()
+        
         return cell
     }
     
     //Show modal to edit expense when user click on tableView's row
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        //Get category name
-        let category = expenseCategory[indexPath.section].name
-        
-        //Get expenses in that category
-        let expensesInCategory = self.getExpensesWithCategory(categoryName: category)
-        
-        //Get expense at selected row
-        let expense = expensesInCategory[indexPath.row]
 
-        //Instantiate destination VC
-        let vc = UIStoryboard(name: "AddExpense", bundle: nil).instantiateViewController(withIdentifier: "addExpense") as! AddExpenseViewController
-        
-        //Get category index of that expense
-        let categoryIndex = vc.categories.firstIndex(where: { $0 == category })
-        
-        //Set destination VC variables' value
-        vc.expense = expense
-        vc.receivedSelectedCategories = categoryIndex
-        vc.isCategoriesSelected[categoryIndex!] = true
+        if !disabledCellIndexPath.contains(indexPath) {
+            //Get category name
+            let category = expenseCategory[indexPath.section].name
+            
+            //Get expenses in that category
+            let expensesInCategory = self.getExpensesWithCategory(categoryName: category)
+            
+            //Get expense at selected row
+            let expense = expensesInCategory[indexPath.row]
 
-        //Show destination VC (modally)
-        present(vc, animated: true)
+            //Instantiate destination VC
+            let vc = UIStoryboard(name: "AddExpense", bundle: nil).instantiateViewController(withIdentifier: "addExpense") as! AddExpenseViewController
+            
+            //Get category index of that expense
+            let categoryIndex = vc.categories.firstIndex(where: { $0 == category })
+            
+            //Set destination VC variables' value
+            vc.expense = expense
+            vc.receivedSelectedCategories = categoryIndex
+            vc.isCategoriesSelected[categoryIndex!] = true
+
+            //Show destination VC (modally)
+            present(vc, animated: true)
+        }
     }
 
     //Add delete action to each row in tableView
@@ -291,6 +331,7 @@ extension MainScreenViewController: UITableViewDelegate, UITableViewDataSource {
             
             //Get expense at selected index
             let expenseToRemove = expensesInCategory[indexPath.row]
+            
             
             //Delete that expense and save
             self.context.delete(expenseToRemove)
@@ -326,4 +367,16 @@ extension MainScreenViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 48
     }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return !disabledCellIndexPath.contains(indexPath)
+    }
+    
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        var height: CGFloat = 50
+//        if tableView.cellForRow(at: indexPath) is EmptyTableViewCell {
+//            height = 30
+//        }
+//        return height
+//    }
 }
