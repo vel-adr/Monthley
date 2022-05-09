@@ -26,7 +26,6 @@
 		E94ED29528193E5E00CFE513 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94ED29428193E5E00CFE513 /* CustomTextField.swift */; };
 		E955ADA32819527800090F2E /* MainScreenStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E955ADA22819527800090F2E /* MainScreenStoryboard.storyboard */; };
 		E955ADA52819529400090F2E /* MainScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E955ADA42819529400090F2E /* MainScreenViewController.swift */; };
-		E955ADA72819840500090F2E /* CustomRoundedRectangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E955ADA62819840500090F2E /* CustomRoundedRectangle.swift */; };
 		E97D25DC28199AAC00E10A24 /* CustomTableHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97D25DB28199AAC00E10A24 /* CustomTableHeader.swift */; };
 		E97D25DE28199ACA00E10A24 /* CustomTableHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = E97D25DD28199ACA00E10A24 /* CustomTableHeader.xib */; };
 		E9D433C8281B23A90084D6F8 /* Expense+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D433C4281B23A90084D6F8 /* Expense+CoreDataClass.swift */; };
@@ -59,7 +58,6 @@
 		E94ED29428193E5E00CFE513 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		E955ADA22819527800090F2E /* MainScreenStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainScreenStoryboard.storyboard; sourceTree = "<group>"; };
 		E955ADA42819529400090F2E /* MainScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenViewController.swift; sourceTree = "<group>"; };
-		E955ADA62819840500090F2E /* CustomRoundedRectangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRoundedRectangle.swift; sourceTree = "<group>"; };
 		E97D25DB28199AAC00E10A24 /* CustomTableHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableHeader.swift; sourceTree = "<group>"; };
 		E97D25DD28199ACA00E10A24 /* CustomTableHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTableHeader.xib; sourceTree = "<group>"; };
 		E9D433C4281B23A90084D6F8 /* Expense+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Expense+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -87,7 +85,6 @@
 				E97D25DB28199AAC00E10A24 /* CustomTableHeader.swift */,
 				E94ED29428193E5E00CFE513 /* CustomTextField.swift */,
 				E94D1040281A2D6D00F4C809 /* CustomCategoryTableViewCell.swift */,
-				E955ADA62819840500090F2E /* CustomRoundedRectangle.swift */,
 				E97D25DD28199ACA00E10A24 /* CustomTableHeader.xib */,
 				E94D1047281A454300F4C809 /* CustomExpenseTableViewCell.swift */,
 				E9D433CC281B8AD40084D6F8 /* EmptyTableViewCell.swift */,
@@ -259,7 +256,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E94D1046281A40E500F4C809 /* Category.swift in Sources */,
-				E955ADA72819840500090F2E /* CustomRoundedRectangle.swift in Sources */,
 				E94ED27E2819346800CFE513 /* ViewController.swift in Sources */,
 				E94D1041281A2D6D00F4C809 /* CustomCategoryTableViewCell.swift in Sources */,
 				E94ED27A2819346800CFE513 /* AppDelegate.swift in Sources */,

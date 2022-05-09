@@ -103,40 +103,6 @@ class CreateNewBudgetViewController: UIViewController {
             }
             
             userDefault.set(true, forKey: "isNewUser")
-//            let destinationVC = segue.destination as? MainScreenViewController
-//            let budget = budgetTextField.text
-//            destinationVC?.totalBudget = Int(CFStringGetIntValue(budget as CFString?))
         }
     }
 }
-
-//extension CreateNewBudgetViewController: UITextFieldDelegate {
-//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-//        var amountTyped = 0
-//
-//        if string.count > 0 {
-//            amountTyped = Int(string) ?? 0
-//            let newAmount = formatter.string(from: NSNumber(value: amountTyped))
-//            textField.text = newAmount
-//        }
-//
-//        return false
-//    }
-//}
-
-//Cara 3 nambahin bottom border TextField (https://stackoverflow.com/a/41291113)
-
-//extension TextFieldWithPadding {
-//  func setBottomBorder() {
-//    self.borderStyle = .none
-//    self.layer.backgroundColor = UIColor.white.cgColor
-//
-//    self.layer.masksToBounds = false
-//    self.layer.shadowColor = UIColor.gray.cgColor
-//    self.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
-//    self.layer.shadowOpacity = 1.0
-//    self.layer.shadowRadius = 0.0
-//  }
-//}
-
-//    budgetTextField.setBottomBorder() <---------------------- cara 3 dipanggil disini

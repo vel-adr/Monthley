@@ -235,17 +235,6 @@ extension MainScreenViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let expenses = getExpensesWithCategory(categoryName: expenseCategory[section].name)
         
-//        DispatchQueue.main.async {    // Recommended
-//           if expenses.count == 0 {
-//               tableView.isHidden = true
-//               self.emptyMessageView.isHidden = false
-//           }
-//           else {
-//               self.emptyMessageView.isHidden = true
-//               tableView.isHidden = false
-//           }
-//        }
-//        print(expenses)
         return expenses.isEmpty ? 1 : expenses.count
     }
     
@@ -262,10 +251,6 @@ extension MainScreenViewController: UITableViewDelegate, UITableViewDataSource {
         
         //Get expenses for that category
         let expenses = self.getExpensesWithCategory(categoryName: category)
-        
-//        print(category + ": \(expenses.count) - Index path: \(indexPath) - Section: \(indexPath.section)")
-        
-        
         
         if expenses.count == 0 {
             disabledCellIndexPath.append(indexPath)
@@ -368,12 +353,4 @@ extension MainScreenViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return !disabledCellIndexPath.contains(indexPath)
     }
-    
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        var height: CGFloat = 50
-//        if tableView.cellForRow(at: indexPath) is EmptyTableViewCell {
-//            height = 30
-//        }
-//        return height
-//    }
 }
