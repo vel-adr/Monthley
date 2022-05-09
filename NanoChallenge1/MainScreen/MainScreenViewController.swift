@@ -26,8 +26,8 @@ class MainScreenViewController: UIViewController {
     //Local var
     var totalSpending: Int = 0
     var expenseCategory = [
-        Category(name: "Essential", image: "house"),
-        Category(name: "Optional", image: "gamecontroller"),
+        Category(name: "Daily Needs", image: "house"),
+        Category(name: "Non-Essentials", image: "cup.and.saucer"),
         Category(name: "Saving", image: "dollarsign.circle")
     ]
     var expenses: [Expense]?
@@ -56,9 +56,9 @@ class MainScreenViewController: UIViewController {
         do {
             self.expenses = try context.fetch(Expense.fetchRequest())
             
-            DispatchQueue.main.async {
+//            DispatchQueue.main.async {
                 self.tableView.reloadData()
-            }
+//            }
         }
         catch {
             print("Error fetching expenses")
@@ -67,7 +67,7 @@ class MainScreenViewController: UIViewController {
     
     func fetchBudget() {
         do {
-            budget = try context.fetch(Budget.fetchRequest())[0]
+            budget = try context.fetch(Budget.fetchRequest())[0] //careful might cause error
         }
         catch {
             print("Error fetching budget")
@@ -245,6 +245,7 @@ extension MainScreenViewController: UITableViewDelegate, UITableViewDataSource {
 //               tableView.isHidden = false
 //           }
 //        }
+//        print(expenses)
         return expenses.isEmpty ? 1 : expenses.count
     }
     
@@ -255,9 +256,6 @@ extension MainScreenViewController: UITableViewDelegate, UITableViewDataSource {
         
         cell = tableView.dequeueReusableCell(withIdentifier: "ExpenseTableCell", for: indexPath) as! CustomExpenseTableViewCell
         emptyCell = tableView.dequeueReusableCell(withIdentifier: "emptyTableViewCell", for: indexPath) as! EmptyTableViewCell
-
-//        fetchExpenses()
-//        tableView.reloadData()
         
         //Get category name of that section
         let category = self.expenseCategory[indexPath.section].name
@@ -267,8 +265,9 @@ extension MainScreenViewController: UITableViewDelegate, UITableViewDataSource {
         
 //        print(category + ": \(expenses.count) - Index path: \(indexPath) - Section: \(indexPath.section)")
         
+        
+        
         if expenses.count == 0 {
-//            emptyCell.frame.height = 30
             disabledCellIndexPath.append(indexPath)
             return emptyCell
         }
@@ -284,8 +283,6 @@ extension MainScreenViewController: UITableViewDelegate, UITableViewDataSource {
             let expenseAmount = expenses[indexPath.row].amount
             cell.amountLabel.text = "\(self.formatted(amount: Int(expenseAmount)))"
         }
-        
-//        tableView.reloadData()
         
         return cell
     }

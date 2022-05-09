@@ -17,8 +17,8 @@ class AddExpenseViewController: UIViewController {
     
     var lastSelectedRowIndexPath: IndexPath? = nil
     var isCategoriesSelected = [false, false, false]
-    let categories = ["Essential", "Optional", "Saving"]
-    let categoriesImage = ["house", "gamecontroller", "dollarsign.circle"]
+    let categories = ["Daily Needs", "Non-Essentials", "Saving"]
+    let categoriesImage = ["house", "cup.and.saucer", "dollarsign.circle"]
     
     //var to be passed back to main screen
     var name: String? = ""
@@ -35,9 +35,12 @@ class AddExpenseViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
+        //Set textField value if mainScreen passes data to this controller
         if expense != nil {
             nameTextField.text = expense?.name
-            amountTextField.text = "\(expense?.amount ?? -1)"
+            
+            let formattedAmount = formatter.string(from: NSNumber(value: expense?.amount ?? 0))
+            amountTextField.text = formattedAmount
         }
         
         setModalHeight()
@@ -54,10 +57,15 @@ class AddExpenseViewController: UIViewController {
     }
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        //Get value of textField and selectedCategory
         name = nameTextField.text ?? ""
-        amount = Int(amountTextField.text ?? "") ?? -1
         selectedCategoryIndex = isCategoriesSelected.firstIndex(where: { $0 == true }) ?? -1
         
+        let separator = formatter.groupingSeparator ?? ""
+        let extractedString = amountTextField.text?.replacingOccurrences(of: separator, with: "") ?? "-1"
+        amount = Int(extractedString) ?? -1
+
+        //Check if there are empty textField
         if name?.isEmpty == true || amountTextField.text?.isEmpty == true {
             let alert = UIAlertController(title: "Input Is Not Valid", message: "All text fields must be filled in order to continue", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
@@ -68,7 +76,8 @@ class AddExpenseViewController: UIViewController {
             return false
         }
         
-        if amount ?? -1 < 0 || amount ?? -1 > 999999999 {
+        //Check amountTextField value
+        if amount ?? -1 <= 0 || amount ?? -1 > 999999999 {
             let alert = UIAlertController(title: "Amount Is Not Valid", message: "The amount must be in range of 1 to 999.999.999", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
                 alert.dismiss(animated: true)
@@ -78,6 +87,7 @@ class AddExpenseViewController: UIViewController {
             return false
         }
         
+        //Check if there is selected category
         if selectedCategoryIndex ?? -1 < 0 || selectedCategoryIndex ?? -1 > categories.count-1 {
             let alert = UIAlertController(title: "Category Is Not Valid", message: "You should pick one of the categories in order to continue", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
@@ -98,6 +108,18 @@ class AddExpenseViewController: UIViewController {
     @IBAction func cancelButtonClicked(_ sender: Any) {
         dismiss(animated: true)
     }
+    
+    //Replace inputted value to formatted string
+    @IBAction func textFieldOnChange(_ sender: Any) {
+        //Get extracted value of entered input
+        let textFromTextField = amountTextField.text ?? ""
+        let separator = formatter.groupingSeparator ?? ""
+        let extractedValue = Int(textFromTextField.replacingOccurrences(of: separator, with: ""))
+        
+        //Re-format and replace input text with new formatted string
+        let formattedString = formatter.string(from: NSNumber(value: extractedValue ?? 0))
+        amountTextField.text = formattedString
+    }
 }
 
 extension AddExpenseViewController: UITableViewDelegate, UITableViewDataSource {
@@ -115,6 +137,7 @@ extension AddExpenseViewController: UITableViewDelegate, UITableViewDataSource {
             cell.categoryCheckmark.isHidden = true
         } else {
             lastSelectedRowIndexPath = indexPath
+            cell.backgroundColor = UIColor.systemGray6
         }
         
         return cell
@@ -124,8 +147,6 @@ extension AddExpenseViewController: UITableViewDelegate, UITableViewDataSource {
         return 50
     }
     
-    //cari ganti warna waktu cell diselect
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedCell = tableView.cellForRow(at: indexPath) as! CustomCategoryTableViewCell
 
@@ -134,10 +155,12 @@ extension AddExpenseViewController: UITableViewDelegate, UITableViewDataSource {
             if let selectedIndex = isCategoriesSelected.firstIndex(where: { $0 == true }) {
                 let prevCell = tableView.cellForRow(at: lastSelectedRowIndexPath!) as! CustomCategoryTableViewCell
                 prevCell.categoryCheckmark.isHidden = true
+                prevCell.backgroundColor = UIColor.clear
                 isCategoriesSelected[selectedIndex] = false
 
                 if indexPath.row != selectedIndex {
                     selectedCell.categoryCheckmark.isHidden = !selectedCell.categoryCheckmark.isHidden
+                    selectedCell.backgroundColor = UIColor.systemGray6
                     isCategoriesSelected[indexPath.row] = !isCategoriesSelected[indexPath.row]
                     lastSelectedRowIndexPath = indexPath
                 }
@@ -146,6 +169,7 @@ extension AddExpenseViewController: UITableViewDelegate, UITableViewDataSource {
         }
         else {
             selectedCell.categoryCheckmark.isHidden = !selectedCell.categoryCheckmark.isHidden
+            selectedCell.backgroundColor = UIColor.systemGray6
             isCategoriesSelected[indexPath.row] = !isCategoriesSelected[indexPath.row]
             lastSelectedRowIndexPath = indexPath
         }

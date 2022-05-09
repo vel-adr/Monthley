@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
@@ -11,7 +11,7 @@
         <!--Create New Budget View Controller-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController storyboardIdentifier="CreateNewBudget" id="Y6W-OH-hqX" customClass="CreateNewBudgetViewController" customModule="NanoChallenge1" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="createNewBudgetStoryboard" id="Y6W-OH-hqX" customClass="CreateNewBudgetViewController" customModule="NanoChallenge1" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -26,6 +26,9 @@
                                 <rect key="frame" x="16" y="169" width="382" height="18.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" smartInsertDeleteType="yes" textContentType="tel"/>
+                                <connections>
+                                    <action selector="textFieldOnChange:" destination="Y6W-OH-hqX" eventType="editingChanged" id="Ypr-rk-5es"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JYH-2z-NzT">
                                 <rect key="frame" x="16" y="227.5" width="382" height="50"/>
@@ -38,7 +41,7 @@
                                     <color key="baseBackgroundColor" systemColor="systemGreenColor"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <segue destination="daV-Zz-hnM" kind="show" identifier="toMainScreen" id="SWZ-fz-c5Q"/>
+                                    <action selector="buttonClicked:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="sGY-Gg-N8J"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -58,6 +61,7 @@
                     </view>
                     <connections>
                         <outlet property="budgetTextField" destination="Ajh-Ow-E1u" id="m6y-4F-Jh6"/>
+                        <segue destination="daV-Zz-hnM" kind="show" identifier="toMainScreenFromBudget" id="Dih-Fw-hju"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

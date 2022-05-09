@@ -16,18 +16,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Budgeting Made Easy!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xfE-uC-lGC">
-                                <rect key="frame" x="24" y="375" width="342" height="81.333333333333314"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="34"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Monthley is an application to help you plan your monthly budget." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sey-YS-5uJ">
-                                <rect key="frame" x="24" y="472.33333333333331" width="342" height="36"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5RQ-Tt-ffd">
                                 <rect key="frame" x="16" y="752" width="358" height="50"/>
                                 <constraints>
@@ -39,62 +27,70 @@
                                     <color key="baseBackgroundColor" systemColor="systemGreenColor"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <action selector="getStartedButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4f4-9v-PYU"/>
+                                    <segue destination="YcG-7M-JWR" kind="presentation" id="qTx-nl-X7U"/>
                                 </connections>
                             </button>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="monthley" translatesAutoresizingMaskIntoConstraints="NO" id="hWY-gH-fc4">
-                                <rect key="frame" x="113" y="184" width="164" height="27"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="monthley" translatesAutoresizingMaskIntoConstraints="NO" id="iZt-Qn-bdg">
+                                <rect key="frame" x="16" y="164" width="358" height="36"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="164" id="qKy-dg-CQr"/>
+                                    <constraint firstAttribute="height" constant="36" id="24F-cU-Bq2"/>
                                 </constraints>
                             </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="illus" translatesAutoresizingMaskIntoConstraints="NO" id="X2G-kl-nfJ">
+                                <rect key="frame" x="16" y="248" width="358" height="212"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="212" id="wKF-4A-7eu"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Budgeting Made Easy!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xfE-uC-lGC">
+                                <rect key="frame" x="16" y="508.00000000000006" width="358" height="33.666666666666686"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Monthley is an application to help you plan your monthly budget." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sey-YS-5uJ">
+                                <rect key="frame" x="24" y="557.66666666666663" width="342" height="31.333333333333371"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Sey-YS-5uJ" secondAttribute="trailing" constant="24" id="5Iy-1n-obm"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="xfE-uC-lGC" secondAttribute="trailing" constant="24" id="A07-h9-CS5"/>
-                            <constraint firstItem="xfE-uC-lGC" firstAttribute="top" secondItem="hWY-gH-fc4" secondAttribute="bottom" constant="164" id="D1L-T5-U5h"/>
-                            <constraint firstItem="Sey-YS-5uJ" firstAttribute="top" secondItem="xfE-uC-lGC" secondAttribute="bottom" constant="16" id="S9f-SI-ZF8"/>
-                            <constraint firstItem="hWY-gH-fc4" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="140" id="ZIB-G8-yir"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="xfE-uC-lGC" secondAttribute="trailing" constant="16" id="Fcd-gQ-T7b"/>
+                            <constraint firstItem="iZt-Qn-bdg" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="M0F-2A-V6t"/>
+                            <constraint firstItem="xfE-uC-lGC" firstAttribute="top" secondItem="X2G-kl-nfJ" secondAttribute="bottom" constant="48" id="VBF-qL-Sya"/>
+                            <constraint firstItem="xfE-uC-lGC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="X3i-TL-VaO"/>
                             <constraint firstItem="5RQ-Tt-ffd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="bGx-6F-yYt"/>
-                            <constraint firstItem="hWY-gH-fc4" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="bhy-RN-gew"/>
+                            <constraint firstItem="X2G-kl-nfJ" firstAttribute="top" secondItem="iZt-Qn-bdg" secondAttribute="bottom" constant="48" id="eHR-c5-8EH"/>
                             <constraint firstItem="Sey-YS-5uJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="24" id="eyY-Dh-v92"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="5RQ-Tt-ffd" secondAttribute="bottom" constant="8" id="fh8-UH-O9q"/>
+                            <constraint firstItem="Sey-YS-5uJ" firstAttribute="top" secondItem="xfE-uC-lGC" secondAttribute="bottom" constant="16" id="fzF-8o-QK4"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="iZt-Qn-bdg" secondAttribute="trailing" constant="16" id="fzq-gE-Boh"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="X2G-kl-nfJ" secondAttribute="trailing" constant="16" id="iu5-xX-AGW"/>
+                            <constraint firstItem="iZt-Qn-bdg" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="120" id="ldT-Sv-EdY"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="5RQ-Tt-ffd" secondAttribute="trailing" constant="16" id="mbV-81-KLn"/>
-                            <constraint firstItem="xfE-uC-lGC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="24" id="upW-BF-V1d"/>
+                            <constraint firstItem="X2G-kl-nfJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="nij-A6-69C"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <outlet property="getStartedButton" destination="5RQ-Tt-ffd" id="nOl-g6-9ac"/>
-                        <segue destination="aQC-sq-fk0" kind="show" identifier="toMainScreen" id="npV-AG-Jjj"/>
-                        <segue destination="hfL-b5-Lkc" kind="presentation" identifier="toCreateBudget" id="Wyt-BP-izx"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="20" y="80"/>
+            <point key="canvasLocation" x="20" y="79.620853080568722"/>
         </scene>
-        <!--mainScreenStoryboard-->
-        <scene sceneID="0gC-Np-k8f">
+        <!--createNewBudgetStoryboard-->
+        <scene sceneID="fSv-zx-wmg">
             <objects>
-                <viewControllerPlaceholder storyboardName="MainScreenStoryboard" referencedIdentifier="mainScreenStoryboard" id="aQC-sq-fk0" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="Jzr-jB-KjZ"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="mVh-Xe-yg0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <viewControllerPlaceholder storyboardName="CreateNewBudget" referencedIdentifier="createNewBudgetStoryboard" id="YcG-7M-JWR" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oKF-XK-leQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="637" y="-74"/>
-        </scene>
-        <!--CreateNewBudget-->
-        <scene sceneID="Crb-Me-7bp">
-            <objects>
-                <viewControllerPlaceholder storyboardName="CreateNewBudget" referencedIdentifier="CreateNewBudget" id="hfL-b5-Lkc" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="c2a-A0-FhV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="615" y="223"/>
+            <point key="canvasLocation" x="745" y="166"/>
         </scene>
     </scenes>
     <resources>
+        <image name="illus" width="782.405517578125" height="665.6064453125"/>
         <image name="monthley" width="108" height="27"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

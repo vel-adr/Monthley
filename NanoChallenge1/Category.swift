@@ -11,15 +11,3 @@ struct Category {
     var name: String
     var image: String
 }
-//
-//class Expense {
-//    var name: String = ""
-//    var amount: Int = 0
-//    
-//    init(name: String, amount: Int) {
-//        self.name = name
-//        self.amount = amount
-//    }
-//}
-
-
